@@ -1,0 +1,22 @@
+{
+  "name": "check-room",
+  "version": "1.0.0",
+  "description": "ApiRest, para gestion de datos de dispositivos arduino y esp32",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon main.js"
+  },
+  "author": "Antonio Fransisco Martinez Simuta.",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-rate-limit": "^6.7.0",
+    "jsonwebtoken": "^9.0.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.19",
+    "socket.io": "^4.6.1"
+  }
+}
