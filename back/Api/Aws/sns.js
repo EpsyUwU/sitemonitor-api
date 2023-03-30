@@ -1,5 +1,4 @@
-const AWS = require("aws-sdk");
-
+import AWS from 'aws-sdk'
 
 const sns = new AWS.SNS({
   accessKeyId: "AKIAXCNTY3ZVRSH7LDOU",
