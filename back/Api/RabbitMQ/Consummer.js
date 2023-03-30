@@ -19,5 +19,4 @@ const rabbitMQ = {
   },
 };
 
-
 export default rabbitMQ;
