@@ -1,5 +1,8 @@
 import _insertNewDateHyT from "../models/TyH.model.js"
 import rabbitMQ from '../RabbitMQ/Consummer.js';
+import sns from '../Aws/sns.js'
+
+
 
 
 const nuevoRegistroTyH = async(req, res) => {
@@ -9,10 +12,25 @@ const nuevoRegistroTyH = async(req, res) => {
       temperatura: req.body.data.temperatura,
       humedad: req.body.data.humedad,
     };
-  
+    
     try {
       _insertNewDateHyT._insertNewDateHyT(TyH, async (data) => {
         let TyH = data;
+
+        let temperatura = parseInt(req.body.data.temperatura)
+        if(temperatura > 45){
+          let params = {
+            Message: `${req.body.email} \n\n el site se esta quemandooooo, temperatura: ${temperatura}`,
+            Subject: req.body.Subject,
+            TopicArn: 'arn:aws:sns:us-east-2:486245195371:monitoreo'
+          }
+
+          sns.publish(params, (err,data) => {
+            if (err) console.log(err, err.stack);
+            else console.log(data);
+          });
+        }
+      
   
         if (TyH) {
           res.json({

@@ -10,7 +10,7 @@ export const _create_user = (user,callback) =>{
                                 +user.fechaNacimiento+'","'
                                 +user.username+'","'
                                 +user.password+'","'
-                                +user.direccion+'")';
+                                +user.gmail+'")';
 
     let connection = createConnection(conexion);
 

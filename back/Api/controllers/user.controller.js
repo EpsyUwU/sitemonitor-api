@@ -1,6 +1,7 @@
 import {getAllUser, login_user, _create_user,_delete_user, getUserById} from '../models/user.model.js' 
 import jwt from 'jsonwebtoken';
 import rabbitMQ from '../RabbitMQ/Consummer.js';
+import sns from '../Aws/sns.js'
 
 //Crear Usuario-----------------------------------------------------
 const create_user = async (req, res) => {
@@ -12,15 +13,29 @@ const create_user = async (req, res) => {
         fechaNacimiento : req.body.fechaNacimiento,
         username : req.body.username,
         password : req.body.password,
-        direccion: req.body.direccion
+        gmail: req.body.gmail
     }
 
     try {
         _create_user(user,async (data)=>{
             let user = data;
-            
-        
+            const gmail = req.body.gmail
+
         if(user){
+            const message = {
+                Protocol: 'EMAIL', 
+                TopicArn: "arn:aws:sns:us-east-2:486245195371:monitoreo",
+                Endpoint: gmail
+            }
+
+            sns.subscribe(message, (err, data) => {
+                if (err) {
+                  console.log("Error al enviar el mensaje SNS", err);
+                } else {
+                  console.log("Mensaje SNS enviado correctamente", data);
+                }
+            });
+
             return res.json({
                 error:false,
                 status:200,
@@ -230,3 +245,4 @@ export const userController = {
     login,
     user_By_IdUser,
 };
+

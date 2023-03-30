@@ -1,10 +1,10 @@
 
 //Credenciales de base de datos local....
 export const conexion = {
-    host: '127.0.0.1',
-    database: 'db-monitors',                
-    user: 'user.nodejs',
-    password: 'password.1234',
+    host: 'database-1.c7xi7vtoo9kr.us-east-2.rds.amazonaws.com',
+    database: 'monitos',                
+    user: 'admin',
+    password:'adminadmin',
     port:3306
 };
 
