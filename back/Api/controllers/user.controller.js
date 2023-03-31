@@ -144,7 +144,8 @@ const login = async (req, res) => {
     try {
         login_user(username, password, (data) => {
             let userFind = data[0]
-            
+            console.log(userFind);
+            console.log(username + " y " + password);
             if (!userFind) {
                 return res.send({
                     message: "Usuario no encontrado"
@@ -161,7 +162,7 @@ const login = async (req, res) => {
                             name: userFind.name,
                             email: userFind.email,
                             membership: userFind.membership
-                        }, process.env.TOKEN_SECRET, { expiresIn: '15m' }
+                        }, "SECRET", { expiresIn: '3h' }
                     );
                     //envia en formato json el token generado con la cabezera auth-token
                     return res.json({
