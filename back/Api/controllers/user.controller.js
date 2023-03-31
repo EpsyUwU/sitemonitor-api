@@ -143,13 +143,21 @@ const login = async (req, res) => {
         login_user(username, password, (data) => {
             let user = data[0];
             //console.log(user);
-            if (user) {
+            if (!user) {
+                return res.json({
+                    error: false,
+                    status: 400,
+                    message: "Usuario no encontrado",
+                    user: []
+                });
+            }
+            else {
                 if (req.body.username === user.username) {
                     if (req.body.password === user.password) {
                         const token = jwt.sign({
                             username: user.username,
                             name: user.name,
-                        }, "SECRET", {expiresIn: '3h'}, (err, token) => {
+                        }, "SECRET", { expiresIn: '3h' }, (err, token) => {
                             if (err) {
                                 res.json({
                                     error: true,
@@ -160,7 +168,7 @@ const login = async (req, res) => {
                                 return res.json({
                                     error: false,
                                     status: 200,
-                                    menssage: "Usuario encontrado",
+                                    message: "Usuario encontrado",
                                     data: token
                                 });
                             }
@@ -172,13 +180,6 @@ const login = async (req, res) => {
                     res.send("Nombre de usuario incorrecto")
                 }
 
-            } else {
-                return res.json({
-                    error: false,
-                    status: 201,
-                    menssage: "Usuario no encontrado",
-                    user: []
-                });
             }
 
         })
@@ -186,7 +187,7 @@ const login = async (req, res) => {
         return res.json({
             error: true,
             status: 500,
-            menssage: "Error en el servidor",
+            message: "Error en el servidor",
             StatusError: error.toString()
         });
     }
