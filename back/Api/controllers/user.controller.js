@@ -146,7 +146,7 @@ const login = async (req, res) => {
             let userFind = data[0]
             console.log(userFind);
             console.log(username + " y " + password);
-            if (!userFind) {
+            if (userFind == null) {
                 return res.send({
                     message: "Usuario no encontrado"
                 });
@@ -185,7 +185,7 @@ const login = async (req, res) => {
             message: "Error en el servidor",
             StatusError: error.toString()
         });
-    }
+    } 
 
 }
 
