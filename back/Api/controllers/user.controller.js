@@ -145,6 +145,18 @@ const login = async(req,res) => {
             //console.log(user);
             if(user){
 
+                if(req.body.username === user.username){
+                    if(req.body.password === user.password){
+                        jwt.sign({
+                            Username: user.username
+                        })
+                    }else{
+                        res.send("contraseña no encontrado") 
+                    }
+                }else{
+                    res.send("usuario no encontrado") 
+                }
+
                 jwt.sign({
                     user
                 }, "SECRET", {
