@@ -136,8 +136,8 @@ const all_User = async (req, res) => {
 //Loguear Usuario---------------------------------------------------
 const login = async (req, res) => {
 
-    let username = req.body.username
-    let password = req.body.password
+    let username = req.params.username
+    let password = req.params.password
 
     
 
