@@ -49,6 +49,6 @@ app.listen(port, () => {
 https.createServer({
         cert: fs.readFileSync('/etc/letsencrypt/archive/monitors.hopto.org/fullchain1.pem'),
         key: fs.readFileSync('/etc/letsencrypt/archive/monitors.hopto.org/privkey1.pem')
-}, app).listen(PORT, function () {
+}, app).listen(port, function () {
         console.log(`server up on port ${port}`);
 });
