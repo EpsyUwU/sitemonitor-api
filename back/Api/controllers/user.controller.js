@@ -139,47 +139,41 @@ const login = async (req, res) => {
     let username = req.body.username
     let password = req.body.password
 
+    
+
     try {
         login_user(username, password, (data) => {
-            let user = data[0];
-            //console.log(user);
-            if (!user) {
-                return res.json({
-                    error: false,
-                    status: 400,
-                    message: "Usuario no encontrado",
-                    user: []
+            let userFind = data[0]
+            
+            if (!userFind) {
+                return res.send({
+                    message: "Usuario no encontrado"
                 });
             }
-            else {
-                if (req.body.username === user.username) {
-                    if (req.body.password === user.password) {
-                        const token = jwt.sign({
-                            username: user.username,
-                            name: user.name,
-                        }, "SECRET", { expiresIn: '3h' }, (err, token) => {
-                            if (err) {
-                                res.json({
-                                    error: true,
-                                    tipoError: 403,
-                                    mesage: "Error en el servidor",
-                                });
-                            } else {
-                                return res.json({
-                                    error: false,
-                                    status: 200,
-                                    message: "Usuario encontrado",
-                                    data: token
-                                });
-                            }
-                        });
-                    } else {
-                        res.send("contraseña incorrecta");
-                    }
-                } else {
-                    res.send("Nombre de usuario incorrecto")
+        
+            if (req.params.username === userFind.username) {
+                if (req.params.password === userFind.password) {
+                    //create token 
+                    const token = jwt.sign(
+                        //payload del token
+                        {
+                            username: userFind.username,
+                            name: userFind.name,
+                            email: userFind.email,
+                            membership: userFind.membership
+                        }, process.env.TOKEN_SECRET, { expiresIn: '15m' }
+                    );
+                    //envia en formato json el token generado con la cabezera auth-token
+                    return res.json({
+                        data: {
+                            token,
+                        },
+                    });
                 }
-
+        
+                return res.send({
+                    message: "Contraseña incorrecta por favor intentalo de nuevo"
+                });
             }
 
         })
