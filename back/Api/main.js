@@ -42,10 +42,6 @@ connection.connect(function(error) {
     
 });
 
-app.listen(port, () => {
-    console.log("Servidor corriendo en el puerto " + port)
-});
-
 https.createServer({
         cert: fs.readFileSync('/etc/letsencrypt/archive/monitors.hopto.org/fullchain1.pem'),
         key: fs.readFileSync('/etc/letsencrypt/archive/monitors.hopto.org/privkey1.pem')
