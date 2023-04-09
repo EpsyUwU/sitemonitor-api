@@ -85,7 +85,6 @@ export const login_user = (username, password,callback) =>{
         };
         connection.end();
         return callback(null);
-
     });
 
 }
